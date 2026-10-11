@@ -129,7 +129,7 @@ export const BentoCards: React.FC<BentoCardsProps> = ({ onCopy, onOpenMessageMod
           {/* High-Resolution Profile Image Container */}
           <div className="absolute inset-0 w-full h-full overflow-hidden bg-zinc-950">
             <img
-              src="srijan.jpg.png"
+              src="new-profile.jpg"
               alt="Srijan Singh"
               className="w-full h-full object-cover object-center rounded-2xl group-hover:scale-105 transition duration-500"
               style={{ imageRendering: '-webkit-optimize-contrast' as any }}
