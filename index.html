@@ -1,25 +1,539 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Srijan Singh — Full Stack Developer & Freelancer</title>
-    <meta name="description" content="Portfolio of Srijan Singh: Full Stack Developer & Freelancer, BCA 2nd Year student at GLA University, founder of SrijanTech. Modern Bento Grid UI." />
-    <meta property="og:title" content="Srijan Singh — Full Stack Developer & Freelancer" />
-    <meta property="og:description" content="Modern Bento Grid portfolio website for Srijan Singh, Full Stack Developer & Freelancer." />
-    <meta property="og:image" content="/61243.jpg" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Srijan Singh — Full Stack Developer & Freelancer" />
-    <meta name="twitter:description" content="Full Stack Developer & Freelancer | BCA 2nd Year at GLA University." />
-    <meta name="twitter:image" content="/61243.jpg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-[#09090b] text-neutral-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-200 transition-colors duration-300">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Srijan Singh — Full Stack Developer & Freelancer</title>
+  <meta name="description" content="Portfolio of Srijan Singh: Full Stack Developer & Freelancer. BCA 2nd Year (2025 - 2028) at GLA University, Mathura. Founder of SrijanTech." />
 
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .crisp-img {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: auto;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+  </style>
+</head>
+<body class="bg-[#09090b] text-zinc-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
+
+  <!-- Ambient Light Orbs -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+  <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-teal-600/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden items-center gap-3 px-4 py-3 bg-zinc-900 border border-zinc-700 text-zinc-100 rounded-2xl shadow-2xl backdrop-blur-md">
+    <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+    <span id="toast-message" class="text-sm font-medium">Copied to clipboard!</span>
+  </div>
+
+  <!-- Sticky Navbar -->
+  <header class="sticky top-4 z-40 w-full max-w-7xl mx-auto mb-6 px-4 sm:px-6">
+    <div class="flex items-center justify-between px-5 py-3.5 rounded-3xl bg-zinc-900/80 backdrop-blur-xl border border-white/10 shadow-lg">
+      <div class="flex items-center gap-3">
+        <div class="relative flex items-center justify-center w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white font-bold text-lg shadow-md shadow-indigo-500/20">
+          SS
+          <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-zinc-900 rounded-full animate-pulse"></span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm sm:text-base font-bold tracking-tight text-white">Srijan Singh</h1>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium hidden sm:inline-block">
+              Available for Work
+            </span>
+          </div>
+          <p class="text-xs text-zinc-400 hidden sm:block">Full Stack Developer & Freelancer</p>
+        </div>
+      </div>
+
+      <!-- Time in India (IST) -->
+      <div class="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-2xl bg-zinc-800/60 border border-white/5 text-xs font-mono text-zinc-300">
+        <i data-lucide="clock" class="w-3.5 h-3.5 text-indigo-400"></i>
+        <span>India (IST):</span>
+        <span id="ist-time" class="font-semibold text-white">--:--:--</span>
+      </div>
+
+      <!-- Action Items -->
+      <div class="flex items-center gap-2.5">
+        <!-- Theme Switcher -->
+        <button id="theme-toggle" class="flex items-center justify-center w-10 h-10 rounded-2xl bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 hover:text-white border border-white/5 transition-all cursor-pointer" aria-label="Toggle Theme">
+          <i id="theme-icon" data-lucide="sun" class="w-4 h-4 text-amber-400"></i>
+        </button>
+
+        <!-- WhatsApp Quick Chat -->
+        <a href="https://wa.me/917269068483?text=Hi%20Srijan%2C%20I%20would%20love%20to%20discuss%20a%20project!" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs sm:text-sm font-semibold shadow-md shadow-emerald-500/20 transition-all">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          <span>Let's Talk</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Bento Grid -->
+  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+
+      <!-- 1. Hero Main Card -->
+      <div class="md:col-span-2 lg:col-span-2 rounded-3xl p-6 sm:p-8 bg-zinc-900/70 border border-white/10 shadow-xl backdrop-blur-xl flex flex-col justify-between relative overflow-hidden group">
+        <div class="absolute -top-24 -right-24 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-indigo-500/20 transition-all duration-700"></div>
+        <div>
+          <div class="flex items-center gap-2 text-xs font-medium text-emerald-400 mb-4">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span>Available for Client Projects & Opportunities</span>
+            <span class="text-zinc-500">·</span>
+            <span class="text-zinc-400">GLA University</span>
+          </div>
+
+          <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight mb-4">
+            Hi, I'm <span class="bg-gradient-to-r from-indigo-400 via-violet-400 to-teal-400 bg-clip-text text-transparent">Srijan Singh</span> — Full Stack Developer & Freelancer
+          </h2>
+
+          <p class="text-sm sm:text-base text-zinc-300 leading-relaxed max-w-xl mb-6">
+            I architect robust web applications with modern tech stacks, high-performance backends, and bespoke user experiences. From concept to deployment, I build digital products that drive real results.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3 pt-4 border-t border-white/5">
+          <a href="https://wa.me/917269068483" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-indigo-600/25 transition-all">
+            <i data-lucide="message-square" class="w-4 h-4"></i>
+            <span>Message on WhatsApp</span>
+          </a>
+
+          <a href="tel:+917269068483" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-zinc-800/80 hover:bg-zinc-700 text-zinc-200 font-medium text-xs sm:text-sm border border-white/5 transition-all">
+            <i data-lucide="phone" class="w-4 h-4 text-emerald-400"></i>
+            <span>Call +91 7269068483</span>
+          </a>
+
+          <button onclick="copyToClipboard('ssrijan3303@gmail.com', 'Email address')" class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-2xl bg-zinc-800/80 hover:bg-zinc-700 text-zinc-300 text-xs sm:text-sm border border-white/5 transition-all cursor-pointer">
+            <i data-lucide="copy" class="w-3.5 h-3.5 text-zinc-400"></i>
+            <span>Copy Email</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 2. Profile Image Card -->
+      <div class="md:col-span-1 lg:col-span-1 rounded-3xl bg-zinc-900/70 border border-white/10 shadow-xl overflow-hidden relative group min-h-[340px] flex flex-col justify-end">
+        <div class="absolute inset-0 w-full h-full overflow-hidden bg-zinc-950">
+          <img src="srijan.jpg.png" alt="Srijan Singh" class="w-full h-full object-cover object-center rounded-2xl group-hover:scale-105 transition duration-500" style="image-rendering: -webkit-optimize-contrast;">
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/30 to-transparent pointer-events-none"></div>
+        </div>
+
+        <div class="relative z-10 p-5 sm:p-6 backdrop-blur-[2px]">
+          <div class="flex items-center gap-2 text-xs font-medium text-indigo-300 mb-1">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-indigo-400"></i>
+            <span>Mathura & Remote Worldwide</span>
+          </div>
+          <h3 class="text-lg font-bold text-white flex items-center gap-1.5">
+            <span>Srijan Singh</span>
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+          </h3>
+          <p class="text-xs text-zinc-300">Full Stack & Freelance Architect</p>
+
+          <div class="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-zinc-300">
+            <span class="text-zinc-400">Status</span>
+            <span class="font-medium text-emerald-400 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Available to Hire
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Education & Background Card (2025 - 2028) -->
+      <div class="md:col-span-1 lg:col-span-1 rounded-3xl p-6 bg-zinc-900/70 border border-white/10 shadow-xl backdrop-blur-xl flex flex-col justify-between group">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+              <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs font-mono text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded-xl">2025 - 2028</span>
+          </div>
+
+          <div class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">Education & Background</div>
+          <h3 class="text-base sm:text-lg font-bold text-white mb-2 leading-snug">Bachelor of Computer Applications (BCA)</h3>
+          <div class="text-xs font-semibold text-indigo-400 mb-3">GLA University, Mathura — 2nd Year</div>
+
+          <p class="text-xs text-zinc-300 leading-relaxed mb-4">
+            Pursuing 2nd Year BCA (Session 2025 - 2028) with focus on Data Structures & Algorithms, Object-Oriented System Design, Database Management, and Modern Web Engineering.
+          </p>
+        </div>
+
+        <div class="pt-3 border-t border-white/5 text-xs text-zinc-400 flex items-center justify-between">
+          <span class="flex items-center gap-1.5">
+            <i data-lucide="book-open" class="w-3.5 h-3.5 text-zinc-400"></i>
+            GLA University, Mathura
+          </span>
+          <span class="text-zinc-300 font-medium">BCA (2025 - 2028)</span>
+        </div>
+      </div>
+
+      <!-- 4. Agency Showcase: SrijanTech -->
+      <div class="md:col-span-2 lg:col-span-2 rounded-3xl p-6 sm:p-7 bg-zinc-900/70 border border-white/10 shadow-xl backdrop-blur-xl flex flex-col justify-between relative overflow-hidden group">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-2">
+              <div class="w-10 h-10 rounded-2xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400">
+                <i data-lucide="briefcase" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                  SrijanTech
+                  <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-teal-500/15 text-teal-400 border border-teal-500/20">
+                    Agency Hub
+                  </span>
+                </h3>
+                <p class="text-xs text-zinc-400">Founder & Full Stack Lead</p>
+              </div>
+            </div>
+
+            <a href="https://www.srijantech.in" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-xs font-medium text-teal-400 hover:text-teal-300 p-2 rounded-xl bg-teal-500/10 border border-teal-500/20">
+              <span>Visit Agency</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+
+          <p class="text-sm text-zinc-300 leading-relaxed mb-4">
+            Through <strong class="text-white font-semibold">SrijanTech</strong>, I build conversion-oriented digital products, scalable web apps, and customized client platforms. Helping businesses establish a formidable online presence.
+          </p>
+
+          <div class="grid grid-cols-3 gap-3 my-2 text-center">
+            <div class="p-3 rounded-2xl bg-zinc-800/40 border border-white/5">
+              <div class="text-base sm:text-lg font-bold text-white">100%</div>
+              <div class="text-[11px] text-zinc-400">Custom Built</div>
+            </div>
+            <div class="p-3 rounded-2xl bg-zinc-800/40 border border-white/5">
+              <div class="text-base sm:text-lg font-bold text-teal-400">99+</div>
+              <div class="text-[11px] text-zinc-400">Speed Score</div>
+            </div>
+            <div class="p-3 rounded-2xl bg-zinc-800/40 border border-white/5">
+              <div class="text-base sm:text-lg font-bold text-indigo-400">24/7</div>
+              <div class="text-[11px] text-zinc-400">Support</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-zinc-400">
+          <span class="font-mono text-teal-400">https://www.srijantech.in</span>
+          <a href="https://www.srijantech.in" target="_blank" rel="noopener noreferrer" class="text-zinc-300 hover:text-white flex items-center gap-1 font-medium">
+            <span>Explore Services</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- 5. LeetCode Profile Card -->
+      <a href="https://leetcode.com/u/Srijan3303/" target="_blank" rel="noopener noreferrer" class="md:col-span-1 lg:col-span-1 rounded-3xl p-6 bg-zinc-900/70 border border-white/10 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:border-amber-500/40 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 font-bold">
+              <span>LC</span>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-400 group-hover:text-amber-400 transition-all"></i>
+          </div>
+
+          <div class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">Coding & DSA Profile</div>
+          <h3 class="text-lg font-bold text-white mb-1">LeetCode</h3>
+          <p class="text-xs font-mono text-amber-400 mb-3">@Srijan3303</p>
+
+          <div class="space-y-2 mb-4">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-zinc-400">Problems Solved</span>
+              <span class="font-bold text-zinc-200">200+</span>
+            </div>
+            <div class="w-full h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+              <div class="w-4/5 h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-white/5 text-xs text-amber-400 font-medium flex items-center justify-between">
+          <span>View LeetCode Profile</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </div>
+      </a>
+
+      <!-- 6. GitHub Profile Card -->
+      <a href="https://github.com/ssrijan3303-stack" target="_blank" rel="noopener noreferrer" class="md:col-span-1 lg:col-span-1 rounded-3xl p-6 bg-zinc-900/70 border border-white/10 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:border-zinc-500/50 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-2xl bg-zinc-800/80 border border-white/10 flex items-center justify-center text-white">
+              <i data-lucide="github" class="w-5 h-5"></i>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-400 group-hover:text-white transition-all"></i>
+          </div>
+
+          <div class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">Source Code & Repos</div>
+          <h3 class="text-lg font-bold text-white mb-1">GitHub</h3>
+          <p class="text-xs font-mono text-zinc-400 mb-3">@ssrijan3303-stack</p>
+
+          <div class="p-3 rounded-2xl bg-zinc-800/50 border border-white/5 mb-3">
+            <div class="flex items-center justify-between text-xs mb-1.5">
+              <span class="text-zinc-400">Repositories</span>
+              <span class="font-semibold text-white">25+ Projects</span>
+            </div>
+            <div class="text-xs text-emerald-400 flex items-center gap-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              <span>Active Contributor</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-white/5 text-xs text-zinc-300 font-medium flex items-center justify-between">
+          <span>Explore Repositories</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </div>
+      </a>
+
+      <!-- 7. LinkedIn Profile Card -->
+      <a href="https://www.linkedin.com/in/srijan-singh-402502439" target="_blank" rel="noopener noreferrer" class="md:col-span-1 lg:col-span-1 rounded-3xl p-6 bg-zinc-900/70 border border-white/10 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:border-blue-500/40 transition-all">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+              <i data-lucide="linkedin" class="w-5 h-5"></i>
+            </div>
+            <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-400 group-hover:text-blue-400 transition-all"></i>
+          </div>
+
+          <div class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">Professional Network</div>
+          <h3 class="text-lg font-bold text-white mb-1">LinkedIn</h3>
+          <p class="text-xs text-zinc-400 mb-4">Connect for tech collaborations, hiring, and freelance contracts.</p>
+          <div class="text-xs text-zinc-300">500+ Connections</div>
+        </div>
+
+        <div class="pt-3 border-t border-white/5 text-xs text-blue-400 font-medium flex items-center justify-between">
+          <span>Connect on LinkedIn</span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+        </div>
+      </a>
+
+      <!-- 8. Tech Stack & Skills Matrix -->
+      <div class="md:col-span-3 lg:col-span-3 rounded-3xl p-6 sm:p-7 bg-zinc-900/70 border border-white/10 shadow-xl backdrop-blur-xl flex flex-col justify-between">
+        <div>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-1">Core Competencies</div>
+              <h3 class="text-xl font-bold text-white">Tech Stack & Engineering Skills</h3>
+            </div>
+          </div>
+
+          <!-- Skills Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <div class="p-3.5 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-cyan-500/30 transition-all">
+              <div class="w-8 h-8 rounded-xl bg-zinc-800 flex items-center justify-center text-cyan-400 mb-2">
+                <i data-lucide="atom" class="w-5 h-5"></i>
+              </div>
+              <div class="font-semibold text-sm text-white">React.js</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Components, Hooks, State, SPA Architecture</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-emerald-500/30 transition-all">
+              <div class="w-8 h-8 rounded-xl bg-zinc-800 flex items-center justify-center text-emerald-400 mb-2">
+                <i data-lucide="server" class="w-5 h-5"></i>
+              </div>
+              <div class="font-semibold text-sm text-white">Node.js</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Runtime APIs, Async I/O, Backend Services</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-purple-500/30 transition-all">
+              <div class="w-8 h-8 rounded-xl bg-zinc-800 flex items-center justify-center text-purple-400 mb-2">
+                <i data-lucide="layers" class="w-5 h-5"></i>
+              </div>
+              <div class="font-semibold text-sm text-white">Express.js</div>
+              <p class="text-[11px] text-zinc-400 mt-1">REST APIs, Middlewares, Auth & Routing</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-amber-500/30 transition-all">
+              <div class="w-8 h-8 rounded-xl bg-zinc-800 flex items-center justify-center text-amber-400 mb-2">
+                <i data-lucide="code-2" class="w-5 h-5"></i>
+              </div>
+              <div class="font-semibold text-sm text-white">JavaScript</div>
+              <p class="text-[11px] text-zinc-400 mt-1">ES6+, Asynchronous, Closures, DOM</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-blue-500/30 transition-all">
+              <div class="w-8 h-8 rounded-xl bg-zinc-800 flex items-center justify-center text-blue-400 mb-2">
+                <i data-lucide="terminal" class="w-5 h-5"></i>
+              </div>
+              <div class="font-semibold text-sm text-white">Python</div>
+              <p class="text-[11px] text-zinc-400 mt-1">DSA problem solving, scripts, backend logic</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-orange-500/30 transition-all">
+              <div class="w-8 h-8 rounded-xl bg-zinc-800 flex items-center justify-center text-orange-400 mb-2">
+                <i data-lucide="code" class="w-5 h-5"></i>
+              </div>
+              <div class="font-semibold text-sm text-white">HTML5</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Semantic layout, modern a11y, web standards</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-teal-500/30 transition-all">
+              <div class="w-8 h-8 rounded-xl bg-zinc-800 flex items-center justify-center text-teal-400 mb-2">
+                <i data-lucide="palette" class="w-5 h-5"></i>
+              </div>
+              <div class="font-semibold text-sm text-white">Tailwind CSS</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Bento Grid, dark mode, responsive styling</p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-zinc-800/40 border border-white/5 hover:border-rose-500/30 transition-all">
+              <div class="w-8 h-8 rounded-xl bg-zinc-800 flex items-center justify-center text-rose-400 mb-2">
+                <i data-lucide="git-branch" class="w-5 h-5"></i>
+              </div>
+              <div class="font-semibold text-sm text-white">Git & GitHub</div>
+              <p class="text-[11px] text-zinc-400 mt-1">Version control, PRs, branching workflows</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-4 mt-4 border-t border-white/5 flex items-center justify-between text-xs text-zinc-400">
+          <span>Production-grade stack applied in client agency work & DSA.</span>
+          <span class="text-indigo-400 font-mono">8 Core Technologies</span>
+        </div>
+      </div>
+
+      <!-- 9. Contact Card -->
+      <div class="md:col-span-1 lg:col-span-1 rounded-3xl p-6 bg-gradient-to-br from-indigo-900/40 via-zinc-900/80 to-zinc-900/80 border border-indigo-500/20 shadow-xl backdrop-blur-xl flex flex-col justify-between">
+        <div>
+          <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4">
+            <i data-lucide="phone-call" class="w-5 h-5"></i>
+          </div>
+
+          <div class="text-xs font-semibold uppercase tracking-wider text-indigo-400 mb-1">Direct Contact</div>
+          <h3 class="text-lg font-bold text-white mb-2">Get in Touch</h3>
+          <p class="text-xs text-zinc-300 mb-4">Available for freelance contracts, full-stack projects, and internships.</p>
+
+          <div class="space-y-2.5">
+            <a href="https://wa.me/917269068483" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-3 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 transition-all">
+              <div class="flex items-center gap-2.5 text-xs font-semibold">
+                <i data-lucide="message-square" class="w-4 h-4"></i>
+                <span>WhatsApp Chat</span>
+              </div>
+              <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </a>
+
+            <a href="tel:+917269068483" class="flex items-center justify-between p-3 rounded-2xl bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 border border-white/5 transition-all">
+              <div class="flex items-center gap-2.5 text-xs font-medium">
+                <i data-lucide="phone" class="w-4 h-4 text-emerald-400"></i>
+                <span>+91 7269068483</span>
+              </div>
+              <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </a>
+
+            <a href="mailto:ssrijan3303@gmail.com" class="flex items-center justify-between p-3 rounded-2xl bg-zinc-800/60 hover:bg-zinc-700 text-zinc-200 border border-white/5 transition-all">
+              <div class="flex items-center gap-2.5 text-xs font-medium truncate">
+                <i data-lucide="mail" class="w-4 h-4 text-indigo-400"></i>
+                <span class="truncate">ssrijan3303@gmail.com</span>
+              </div>
+              <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="pt-3 mt-4 border-t border-white/5 flex items-center justify-between">
+          <button onclick="copyToClipboard('+91 7269068483', 'Phone number')" class="text-xs text-zinc-400 hover:text-white flex items-center gap-1 cursor-pointer">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>Copy Phone</span>
+          </button>
+          <a href="https://wa.me/917269068483" target="_blank" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 flex items-center gap-1">
+            <span>Fastest Response</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-xs text-zinc-500 py-6 border-t border-white/5">
+      <p>© 2026 Srijan Singh · Full Stack Developer & Freelancer · GLA University, Mathura</p>
+      <p class="mt-1 text-zinc-400">Designed with modern Bento Grid UI architecture.</p>
+    </footer>
+  </main>
+
+  <!-- JavaScript Logic -->
+  <script>
+    lucide.createIcons();
+
+    const htmlElem = document.documentElement;
+    const themeBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+
+    themeBtn.addEventListener('click', () => {
+      if (htmlElem.classList.contains('dark')) {
+        htmlElem.classList.remove('dark');
+        themeIcon.setAttribute('data-lucide', 'moon');
+        themeIcon.classList.remove('text-amber-400');
+        themeIcon.classList.add('text-indigo-600');
+        document.body.classList.remove('bg-[#09090b]', 'text-zinc-100');
+        document.body.classList.add('bg-zinc-50', 'text-zinc-900');
+      } else {
+        htmlElem.classList.add('dark');
+        themeIcon.setAttribute('data-lucide', 'sun');
+        themeIcon.classList.remove('text-indigo-600');
+        themeIcon.classList.add('text-amber-400');
+        document.body.classList.add('bg-[#09090b]', 'text-zinc-100');
+        document.body.classList.remove('bg-zinc-50', 'text-zinc-900');
+      }
+      lucide.createIcons();
+    });
+
+    function updateIstClock() {
+      const clockElem = document.getElementById('ist-time');
+      if (!clockElem) return;
+      try {
+        const now = new Date();
+        const options = {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+        };
+        clockElem.textContent = new Intl.DateTimeFormat('en-IN', options).format(now);
+      } catch (err) {
+        clockElem.textContent = new Date().toLocaleTimeString();
+      }
+    }
+    setInterval(updateIstClock, 1000);
+    updateIstClock();
+
+    function copyToClipboard(text, label) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(label + ' copied to clipboard!');
+      }).catch(() => {
+        showToast('Copied: ' + text);
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = msg;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
